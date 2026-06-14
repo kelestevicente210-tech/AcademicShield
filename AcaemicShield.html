@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AcademicShield — Grow Toward Your Defense</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest-deep:#1b3a2b;
+    --forest:#27493a;
+    --moss:#5a8268;
+    --moss-light:#9bb89f;
+    --paper:#f7f3e8;
+    --paper-warm:#f1ead8;
+    --bark:#3e2f24;
+    --amber:#d4a24e;
+    --amber-soft:#e9c98a;
+    --terracotta:#c0654a;
+    --line:rgba(27,58,43,0.14);
+    --shadow:rgba(27,58,43,0.18);
+    --ff-display:'Fraunces', serif;
+    --ff-body:'Inter', sans-serif;
+    --ff-mono:'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--ff-body);
+    background:var(--paper);
+    color:var(--forest-deep);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* ============ TEXTURE / BACKGROUND ============ */
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(154,184,159,0.18), transparent 45%),
+      radial-gradient(circle at 85% 30%, rgba(212,162,78,0.10), transparent 40%),
+      radial-gradient(circle at 50% 90%, rgba(90,130,104,0.12), transparent 50%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:1200px; margin:0 auto; padding:0 32px; position:relative; z-index:1;}
+
+  a{color:inherit;}
+
+  /* ============ NAV ============ */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(247,243,232,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px; max-width:1200px; margin:0 auto;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--ff-display); font-weight:700; font-size:1.25rem;
+    letter-spacing:0.01em;
+  }
+  .logo-mark{width:28px; height:28px; flex-shrink:0;}
+  .nav-links{display:flex; gap:32px; align-items:center; font-size:0.92rem; font-weight:500;}
+  .nav-links a{text-decoration:none; color:var(--forest); transition:color .2s;}
+  .nav-links a:hover{color:var(--amber);}
+  .nav-cta{
+    background:var(--forest-deep); color:var(--paper);
+    padding:10px 22px; border-radius:999px; font-weight:600; font-size:0.88rem;
+    text-decoration:none; transition:transform .2s, background .2s;
+    display:inline-block;
+  }
+  .nav-cta:hover{background:var(--amber); transform:translateY(-1px); color:var(--forest-deep);}
+  @media (max-width:880px){ .nav-links{display:none;} }
+
+  /* ============ HERO ============ */
+  .hero{
+    padding:90px 0 70px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-inner{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center;
+  }
+  .eyebrow{
+    font-family:var(--ff-mono); font-size:0.78rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--moss); font-weight:500; margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:24px; height:1px; background:var(--moss);}
+  h1{
+    font-family:var(--ff-display); font-weight:600;
+    font-size:clamp(2.6rem, 5.2vw, 4.4rem);
+    line-height:1.05;
+    letter-spacing:-0.01em;
+    margin-bottom:24px;
+    color:var(--forest-deep);
+  }
+  h1 em{
+    font-style:italic; font-weight:400; color:var(--moss);
+    position:relative;
+  }
+  .hero p.lead{
+    font-size:1.18rem; color:var(--forest); max-width:480px; margin-bottom:34px;
+    font-weight:400;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn-primary, .btn-secondary{
+    padding:15px 30px; border-radius:999px; font-weight:600; font-size:0.96rem;
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    transition:all .25s ease; border:1.5px solid transparent; cursor:pointer;
+  }
+  .btn-primary{background:var(--forest-deep); color:var(--paper);}
+  .btn-primary:hover{background:var(--amber); color:var(--forest-deep); transform:translateY(-2px); box-shadow:0 10px 24px var(--shadow);}
+  .btn-secondary{background:transparent; color:var(--forest-deep); border-color:var(--forest-deep);}
+  .btn-secondary:hover{background:var(--forest-deep); color:var(--paper);}
+
+  /* hero growth illustration */
+  .hero-art{position:relative; height:460px; display:flex; align-items:flex-end; justify-content:center;}
+  .hero-art svg{width:100%; height:100%; max-width:480px;}
+  .grow-line{stroke-dasharray:6 6; animation:dash 40s linear infinite;}
+  @keyframes dash{to{stroke-dashoffset:-1000;}}
+  .leaf-float{animation:float 6s ease-in-out infinite;}
+  .leaf-float.d2{animation-delay:-2s;}
+  .leaf-float.d3{animation-delay:-4s;}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-14px) rotate(4deg);}}
+  .ring-pulse{animation:pulse 4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:0.5;} 50%{opacity:1;}}
+
+  @media (max-width:880px){
+    .hero-inner{grid-template-columns:1fr; gap:40px;}
+    .hero-art{height:320px; order:-1;}
+    .hero p.lead{max-width:none;}
+  }
+
+  /* ============ SECTION HEADERS ============ */
+  .section{padding:100px 0;}
+  .section.alt{background:var(--forest-deep); color:var(--paper);}
+  .section.alt .moss-text{color:var(--moss-light);}
+  .section-head{max-width:680px; margin-bottom:56px;}
+  .section-head .eyebrow{color:var(--terracotta);}
+  .section.alt .eyebrow{color:var(--amber);}
+  .section.alt .eyebrow::before{background:var(--amber);}
+  h2{
+    font-family:var(--ff-display); font-weight:600;
+    font-size:clamp(2rem, 3.6vw, 3rem);
+    line-height:1.12; letter-spacing:-0.01em;
+    margin-bottom:18px;
+  }
+  .section-head p{font-size:1.08rem; color:var(--forest); max-width:560px;}
+  .section.alt .section-head p{color:var(--moss-light);}
+
+  /* ============ FEATURE PILLARS (Research/PanelSim/Tutor) ============ */
+  .pillars{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
+  .pillar{
+    background:var(--paper-warm);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:34px 30px;
+    position:relative;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .pillar:hover{transform:translateY(-6px); box-shadow:0 18px 40px var(--shadow);}
+  .pillar-icon{
+    width:52px; height:52px; border-radius:14px; margin-bottom:22px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--forest-deep);
+  }
+  .pillar-icon svg{width:26px; height:26px;}
+  .pillar h3{font-family:var(--ff-display); font-size:1.4rem; font-weight:600; margin-bottom:10px;}
+  .pillar p{color:var(--forest); font-size:0.97rem;}
+  .pillar .pillar-tag{
+    display:inline-block; margin-top:18px; font-family:var(--ff-mono); font-size:0.74rem;
+    color:var(--moss); letter-spacing:0.05em; text-transform:uppercase;
+    border-top:1px dashed var(--line); padding-top:14px; width:100%;
+  }
+  @media (max-width:880px){ .pillars{grid-template-columns:1fr;} }
+
+  /* ============ CANOPY / PERSONAS ============ */
+  .canopy-wrap{position:relative;}
+  .canopy{
+    display:grid; grid-template-columns:repeat(5, 1fr); gap:18px; align-items:end;
+    margin-top:50px;
+  }
+  .canopy-leaf{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(212,162,78,0.22);
+    border-radius:16px 16px 8px 8px;
+    padding:24px 18px;
+    text-align:left;
+    transition:transform .3s, border-color .3s;
+    position:relative;
+  }
+  .canopy-leaf:nth-child(1){transform:translateY(40px);}
+  .canopy-leaf:nth-child(2){transform:translateY(15px);}
+  .canopy-leaf:nth-child(3){transform:translateY(0px);}
+  .canopy-leaf:nth-child(4){transform:translateY(20px);}
+  .canopy-leaf:nth-child(5){
+    transform:translateY(45px);
+    border-color:rgba(212,162,78,0.55);
+    background:rgba(212,162,78,0.08);
+  }
+  .canopy-leaf:hover{transform:translateY(-4px) !important; border-color:var(--amber);}
+  .canopy-leaf .leaf-num{
+    font-family:var(--ff-mono); font-size:0.7rem; color:var(--amber); letter-spacing:0.1em;
+    text-transform:uppercase; margin-bottom:10px; display:block;
+  }
+  .canopy-leaf h4{font-family:var(--ff-display); font-size:1.08rem; font-weight:600; margin-bottom:8px; color:var(--paper);}
+  .canopy-leaf p{font-size:0.85rem; color:var(--moss-light); line-height:1.5;}
+  .canopy-leaf .best-for{
+    margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.08);
+    font-size:0.78rem; color:var(--amber-soft); font-style:italic; font-family:var(--ff-display);
+  }
+  @media (max-width:980px){
+    .canopy{grid-template-columns:1fr 1fr; gap:16px;}
+    .canopy-leaf{transform:none !important;}
+  }
+  @media (max-width:580px){ .canopy{grid-template-columns:1fr;} }
+
+  /* ============ DRS RING VISUAL ============ */
+  .drs-section{display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:center;}
+  .drs-rings{position:relative; display:flex; justify-content:center;}
+  .ring-stat{
+    position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
+    text-align:center;
+  }
+  .ring-stat .num{font-family:var(--ff-display); font-size:3.2rem; font-weight:700; color:var(--paper); line-height:1;}
+  .ring-stat .label{font-family:var(--ff-mono); font-size:0.7rem; letter-spacing:0.15em; color:var(--moss-light); text-transform:uppercase; margin-top:6px;}
+  .drs-categories{display:flex; flex-direction:column; gap:24px;}
+  .drs-cat{display:flex; align-items:center; gap:18px;}
+  .drs-cat .dot{width:14px; height:14px; border-radius:50%; flex-shrink:0;}
+  .drs-cat h4{font-family:var(--ff-display); font-size:1.15rem; font-weight:600; margin-bottom:4px; color:var(--paper);}
+  .drs-cat p{font-size:0.88rem; color:var(--moss-light);}
+  @media (max-width:880px){ .drs-section{grid-template-columns:1fr; gap:50px;} }
+
+  /* ============ JOURNEY / GROWTH PATH (the "tree rings" pricing) ============ */
+  .journey-intro{text-align:center; max-width:720px; margin:0 auto 60px;}
+  .journey{
+    display:grid; grid-template-columns:repeat(5, 1fr); gap:0; position:relative;
+    border-top:2px solid var(--line);
+    padding-top:50px;
+  }
+  .journey::before{
+    content:'';
+    position:absolute; top:-1px; left:0; height:2px; width:0%;
+    background:var(--amber);
+    animation:grow-root 2.4s ease-out forwards;
+  }
+  @keyframes grow-root{ to{width:100%;} }
+  .journey-stage{
+    position:relative; padding:0 18px 0 0;
+    border-right:1px dashed var(--line);
+  }
+  .journey-stage:last-child{border-right:none; padding-right:0;}
+  .journey-stage::before{
+    content:''; position:absolute; top:-58px; left:0;
+    width:14px; height:14px; border-radius:50%;
+    background:var(--paper); border:3px solid var(--moss);
+  }
+  .journey-stage.featured::before{background:var(--amber); border-color:var(--amber); width:18px; height:18px; top:-60px;}
+  .stage-ring{
+    font-family:var(--ff-mono); font-size:0.72rem; color:var(--moss); letter-spacing:0.1em;
+    text-transform:uppercase; margin-bottom:8px;
+  }
+  .journey-stage.featured .stage-ring{color:var(--terracotta); font-weight:700;}
+  .journey-stage h3{font-family:var(--ff-display); font-size:1.3rem; font-weight:600; margin-bottom:4px;}
+  .stage-price{font-family:var(--ff-display); font-size:1.6rem; font-weight:700; color:var(--forest-deep); margin-bottom:4px;}
+  .stage-price span{font-size:0.78rem; font-weight:400; color:var(--moss); font-family:var(--ff-body);}
+  .stage-tagline{font-size:0.82rem; color:var(--moss); margin-bottom:18px; min-height:38px;}
+  .stage-feature-list{list-style:none; display:flex; flex-direction:column; gap:9px;}
+  .stage-feature-list li{
+    font-size:0.83rem; color:var(--forest);
+    padding-left:18px; position:relative;
+  }
+  .stage-feature-list li::before{
+    content:'✦'; position:absolute; left:0; top:0;
+    color:var(--moss); font-size:0.7rem;
+  }
+  .journey-stage.featured .stage-feature-list li::before{color:var(--terracotta);}
+  .featured-badge{
+    display:inline-block; background:var(--terracotta); color:var(--paper);
+    font-family:var(--ff-mono); font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase;
+    padding:4px 10px; border-radius:999px; margin-bottom:10px;
+  }
+  @media (max-width:980px){
+    .journey{grid-template-columns:1fr; border-top:none; padding-top:0;}
+    .journey::before{display:none;}
+    .journey-stage{
+      border-right:none; border-left:2px solid var(--line); padding:0 0 40px 28px; margin-left:8px;
+    }
+    .journey-stage::before{top:0; left:-9px;}
+    .journey-stage.featured::before{top:-2px; left:-11px;}
+    .journey-stage:last-child{padding-bottom:0;}
+  }
+
+  /* ============ TWO BUCKET / ROOTS ============ */
+  .roots-section{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
+  .bucket-card{
+    background:var(--paper-warm); border:1px solid var(--line); border-radius:18px;
+    padding:28px; margin-bottom:18px; display:flex; gap:20px; align-items:flex-start;
+  }
+  .bucket-card:last-child{margin-bottom:0;}
+  .bucket-num{
+    font-family:var(--ff-display); font-size:2.4rem; font-weight:700; color:var(--moss-light);
+    flex-shrink:0; line-height:1; min-width:50px;
+  }
+  .bucket-card.b2 .bucket-num{color:var(--amber);}
+  .bucket-card h4{font-family:var(--ff-display); font-size:1.15rem; font-weight:600; margin-bottom:6px;}
+  .bucket-card p{font-size:0.92rem; color:var(--forest);}
+  .roots-visual{position:relative; display:flex; justify-content:center;}
+  @media (max-width:880px){ .roots-section{grid-template-columns:1fr; gap:40px;} .roots-visual{order:-1;} }
+
+  /* ============ EMERGENCY PACKS ============ */
+  .emergency-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .emergency-card{
+    background:var(--forest); border:1px solid rgba(212,162,78,0.2); border-radius:18px;
+    padding:32px; position:relative; overflow:hidden;
+  }
+  .emergency-card .price-tag{
+    font-family:var(--ff-display); font-size:2.6rem; font-weight:700; color:var(--amber); margin-bottom:6px;
+  }
+  .emergency-card h4{font-size:1.1rem; font-weight:600; color:var(--paper); margin-bottom:8px;}
+  .emergency-card p{font-size:0.9rem; color:var(--moss-light);}
+  @media (max-width:700px){ .emergency-grid{grid-template-columns:1fr;} }
+
+  /* ============ INSTITUTIONAL ============ */
+  .inst-grid{display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start;}
+  .inst-table{width:100%; border-collapse:collapse; margin-top:30px;}
+  .inst-table th, .inst-table td{
+    text-align:left; padding:14px 16px; font-size:0.88rem; border-bottom:1px solid var(--line);
+  }
+  .inst-table th{
+    font-family:var(--ff-mono); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--moss); font-weight:500;
+  }
+  .inst-table td.price{font-family:var(--ff-display); font-weight:700; font-size:1.05rem;}
+  .privacy-list{display:flex; flex-direction:column; gap:16px; margin-top:24px;}
+  .privacy-row{display:flex; gap:14px; align-items:flex-start;}
+  .privacy-row .pip{
+    width:10px; height:10px; border-radius:50%; margin-top:6px; flex-shrink:0;
+  }
+  .privacy-row.yes .pip{background:var(--moss);}
+  .privacy-row.no .pip{background:var(--terracotta);}
+  .privacy-row strong{display:block; font-size:0.95rem; margin-bottom:2px;}
+  .privacy-row span{font-size:0.86rem; color:var(--forest);}
+  @media (max-width:880px){ .inst-grid{grid-template-columns:1fr;} }
+
+  /* ============ COMPARISON TABLE ============ */
+  .table-wrap{overflow-x:auto; border-radius:18px; border:1px solid var(--line); margin-top:40px;}
+  table.compare{width:100%; border-collapse:collapse; min-width:760px; background:var(--paper-warm);}
+  table.compare th, table.compare td{
+    padding:14px 18px; text-align:left; font-size:0.85rem; border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  table.compare th{
+    font-family:var(--ff-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--moss); background:var(--paper); position:sticky; top:0;
+  }
+  table.compare th:first-child, table.compare td:first-child{
+    font-weight:600; color:var(--forest-deep); position:sticky; left:0; background:var(--paper-warm);
+    font-family:var(--ff-display); white-space:normal; min-width:170px;
+  }
+  table.compare th:first-child{background:var(--paper);}
+  table.compare th.featured-col, table.compare td.featured-col{background:rgba(212,162,78,0.1);}
+  table.compare tr:last-child td{border-bottom:none;}
+  table.compare tr:hover td{background:rgba(90,130,104,0.06);}
+  table.compare tr:hover td:first-child{background:rgba(90,130,104,0.1);}
+  table.compare td.unlocked{color:var(--moss); font-weight:600;}
+  table.compare td.locked{color:var(--moss-light); font-style:italic;}
+
+  /* ============ CONVERSION MOMENTS ============ */
+  .moments{display:flex; flex-direction:column; gap:0;}
+  .moment{
+    display:grid; grid-template-columns:140px 1fr 1fr; gap:30px; padding:28px 0;
+    border-bottom:1px solid var(--line); align-items:center;
+  }
+  .moment:first-child{padding-top:0;}
+  .moment:last-child{border-bottom:none; padding-bottom:0;}
+  .moment-when{font-family:var(--ff-mono); font-size:0.74rem; letter-spacing:0.06em; color:var(--terracotta); text-transform:uppercase; font-weight:600;}
+  .moment-trigger h4{font-family:var(--ff-display); font-size:1.05rem; font-weight:600; margin-bottom:4px;}
+  .moment-trigger p{font-size:0.85rem; color:var(--moss);}
+  .moment-copy{
+    font-size:0.92rem; color:var(--forest); background:var(--paper-warm); border-radius:12px;
+    padding:16px 20px; border-left:3px solid var(--amber); font-style:italic;
+  }
+  @media (max-width:880px){
+    .moment{grid-template-columns:1fr; gap:10px;}
+    .moment-when{order:-1;}
+  }
+
+  /* ============ FOOTER ============ */
+  footer{
+    background:var(--bark); color:var(--moss-light); padding:70px 0 40px;
+  }
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:50px; margin-bottom:50px;}
+  .footer-brand{font-family:var(--ff-display); font-size:1.4rem; font-weight:700; color:var(--paper); margin-bottom:14px;}
+  .footer-brand-sub{font-size:0.9rem; max-width:280px;}
+  footer h5{font-family:var(--ff-mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--amber); margin-bottom:16px;}
+  footer ul{list-style:none; display:flex; flex-direction:column; gap:10px;}
+  footer ul li a{font-size:0.9rem; text-decoration:none; color:var(--moss-light); transition:color .2s;}
+  footer ul li a:hover{color:var(--amber-soft);}
+  .footer-bottom{
+    border-top:1px solid rgba(154,184,159,0.15); padding-top:28px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px;
+    font-size:0.82rem;
+  }
+  .footer-bottom .confidential{font-family:var(--ff-mono); letter-spacing:0.05em; color:var(--terracotta);}
+  @media (max-width:880px){ .footer-grid{grid-template-columns:1fr 1fr; gap:36px;} }
+  @media (max-width:560px){ .footer-grid{grid-template-columns:1fr;} }
+
+  /* ============ misc ============ */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+
+  ::selection{background:var(--amber-soft); color:var(--forest-deep);}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+        <path d="M16 30C16 30 6 24 6 14C6 7.4 10.7 2.4 16 2C21.3 2.4 26 7.4 26 14C26 24 16 30 16 30Z" fill="#27493a"/>
+        <path d="M16 30V16M16 16C16 16 11 13 10 8M16 16C16 16 21 13 22 8" stroke="#d4a24e" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      AcademicShield
+    </div>
+    <div class="nav-links">
+      <a href="#hub">Research Hub</a>
+      <a href="#panelsim">PanelSim</a>
+      <a href="#growth">Plans</a>
+      <a href="#institutions">Institutions</a>
+      <a href="#access">Full Access Table</a>
+    </div>
+    <a href="#growth" class="nav-cta">Start Free</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow">For Filipino thesis students</div>
+      <h1>Your thesis panel<br>is coming. <em>Are you ready?</em></h1>
+      <p class="lead">AcademicShield grows alongside your research — from your first source to your final defense. Research, practice, and track your readiness in one calm, focused space.</p>
+      <div class="hero-actions">
+        <a href="#growth" class="btn-primary">Start Free →</a>
+        <a href="#panelsim" class="btn-secondary">See How It Works</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 480 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- ground rings (DRS rings as soil rings) -->
+        <ellipse cx="240" cy="430" rx="220" ry="18" fill="#27493a" opacity="0.08"/>
+        <ellipse cx="240" cy="430" rx="160" ry="13" fill="#27493a" opacity="0.10"/>
+        <!-- root/growth path -->
+        <path class="grow-line" d="M240 430 C240 380, 200 360, 200 320 C200 280, 250 270, 250 230 C250 190, 200 180, 200 140 C200 100, 260 90, 260 50" stroke="#5a8268" stroke-width="2" fill="none" opacity="0.5"/>
+        <!-- trunk -->
+        <path d="M236 430 C234 360, 244 300, 240 230 C237 170, 248 110, 244 50" stroke="#3e2f24" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <!-- canopy clusters representing 5 personas -->
+        <g class="leaf-float">
+          <ellipse cx="170" cy="120" rx="68" ry="52" fill="#27493a"/>
+          <ellipse cx="170" cy="120" rx="68" ry="52" fill="#1b3a2b" opacity="0.4"/>
+        </g>
+        <g class="leaf-float d2">
+          <ellipse cx="300" cy="90" rx="80" ry="62" fill="#5a8268"/>
+        </g>
+        <g class="leaf-float d3">
+          <ellipse cx="245" cy="170" rx="92" ry="68" fill="#9bb89f" opacity="0.85"/>
+        </g>
+        <!-- DRS ring glow at top -->
+        <circle class="ring-pulse" cx="270" cy="80" r="14" fill="none" stroke="#d4a24e" stroke-width="3"/>
+        <circle class="ring-pulse" cx="270" cy="80" r="22" fill="none" stroke="#d4a24e" stroke-width="1.5" opacity="0.5"/>
+        <text x="270" y="86" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="700" fill="#1b3a2b">81</text>
+        <!-- small leaves on ground -->
+        <g class="leaf-float d2">
+          <ellipse cx="120" cy="400" rx="22" ry="10" fill="#c0654a" transform="rotate(-20 120 400)"/>
+        </g>
+        <g class="leaf-float d3">
+          <ellipse cx="350" cy="410" rx="26" ry="11" fill="#d4a24e" transform="rotate(15 350 410)"/>
+        </g>
+        <!-- caption -->
+        <text x="240" y="455" text-anchor="middle" font-family="JetBrains Mono" font-size="11" letter-spacing="2" fill="#5a8268">DEFENSE READINESS SCORE: 58 → 81</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ============ THREE PILLARS ============ -->
+<section class="section" id="hub">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Three things, one space</div>
+      <h2>Everything grows from one root system</h2>
+      <p>Research, practice, and feedback aren't separate apps. They're the same growing thing, viewed from different angles — switch between them with a single click, no page reload, no lost place.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f7f3e8" stroke-width="1.8"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z"/><path d="m20 20-3.5-3.5"/></svg>
+        </div>
+        <h3>Research Hub</h3>
+        <p>Search papers, get plain-English summaries with methodology and limitations, build annotated Research Boards by chapter, and auto-cite in APA 7, Chicago, MLA, or IEEE.</p>
+        <span class="pillar-tag">Search · Library · Research Boards</span>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f7f3e8" stroke-width="1.8"><path d="M8 4v16M16 4v16M4 8h4M4 16h4M16 8h4M16 16h4"/></svg>
+        </div>
+        <h3>PanelSim</h3>
+        <p>Practice your defense against five AI panel personas — from a Supportive Mentor to a Devil's Advocate — and get a Defense Readiness Score after every session.</p>
+        <span class="pillar-tag">5 Personas · DRS Scoring</span>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f7f3e8" stroke-width="1.8"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-4 4 4 4 0 0 1-4-4V6a4 4 0 0 1 4-4Z"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg>
+        </div>
+        <h3>AI-Tutor</h3>
+        <p>A layer across both modes that gives structured academic feedback — "Is this argument logically sound?" It coaches and critiques, but never writes your thesis for you.</p>
+        <span class="pillar-tag">Feedback, never ghostwriting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PANELSIM CANOPY ============ -->
+<section class="section alt" id="panelsim">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">The canopy</div>
+      <h2 style="color:var(--paper)">Five personas, like five layers of canopy light</h2>
+      <p>Each persona filters questions differently — from gentle morning light to the harsh glare that finds every gap. Choose one, or combine two for a realistic panel dynamic.</p>
+    </div>
+
+    <div class="canopy reveal">
+      <div class="canopy-leaf">
+        <span class="leaf-num">Layer 01</span>
+        <h4>Supportive Mentor</h4>
+        <p>Encouraging and constructive. Probing but fair questions.</p>
+        <div class="best-for">Early practice, building confidence</div>
+      </div>
+      <div class="canopy-leaf">
+        <span class="leaf-num">Layer 02</span>
+        <h4>Methodologist</h4>
+        <p>Focuses exclusively on research design, sampling, and validity.</p>
+        <div class="best-for">Students weak on methodology</div>
+      </div>
+      <div class="canopy-leaf">
+        <span class="leaf-num">Layer 03</span>
+        <h4>Literature Expert</h4>
+        <p>Challenges gaps in literature review and theoretical framework.</p>
+        <div class="best-for">Students weak on related literature</div>
+      </div>
+      <div class="canopy-leaf">
+        <span class="leaf-num">Layer 04</span>
+        <h4>Devil's Advocate</h4>
+        <p>Takes the opposing position on your core argument. Challenges every assumption.</p>
+        <div class="best-for">Late-stage stress testing</div>
+      </div>
+      <div class="canopy-leaf">
+        <span class="leaf-num">Layer 05 · Pro+</span>
+        <h4>Expert Tutor</h4>
+        <p>All of the above, plus pauses to explain why a question was asked and what a strong answer looks like.</p>
+        <div class="best-for">Deep learning and improvement</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DRS RINGS ============ -->
+<section class="section" style="background:var(--forest-deep); color:var(--paper);">
+  <div class="wrap drs-section">
+    <div class="drs-rings reveal">
+      <svg width="320" height="320" viewBox="0 0 320 320">
+        <circle cx="160" cy="160" r="140" fill="none" stroke="#27493a" stroke-width="14"/>
+        <circle cx="160" cy="160" r="140" fill="none" stroke="#5a8268" stroke-width="14" stroke-dasharray="879" stroke-dashoffset="220" stroke-linecap="round" transform="rotate(-90 160 160)"/>
+        <circle cx="160" cy="160" r="108" fill="none" stroke="#27493a" stroke-width="14"/>
+        <circle cx="160" cy="160" r="108" fill="none" stroke="#d4a24e" stroke-width="14" stroke-dasharray="679" stroke-dashoffset="190" stroke-linecap="round" transform="rotate(-90 160 160)"/>
+        <circle cx="160" cy="160" r="76" fill="none" stroke="#27493a" stroke-width="14"/>
+        <circle cx="160" cy="160" r="76" fill="none" stroke="#c0654a" stroke-width="14" stroke-dasharray="478" stroke-dashoffset="80" stroke-linecap="round" transform="rotate(-90 160 160)"/>
+      </svg>
+      <div class="ring-stat">
+        <div class="num">81</div>
+        <div class="label">Defense Readiness Score</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="eyebrow">Like rings in a trunk</div>
+      <h2 style="color:var(--paper)">Every session adds a ring</h2>
+      <p style="color:var(--moss-light); margin-bottom:40px; max-width:520px;">The DRS measures growth across three dimensions — visible at a glance, trackable over time, and shareable with your adviser.</p>
+      <div class="drs-categories">
+        <div class="drs-cat">
+          <div class="dot" style="background:#5a8268"></div>
+          <div><h4>Methodology Defense</h4><p>How well you defend your research design, sampling, and validity choices.</p></div>
+        </div>
+        <div class="drs-cat">
+          <div class="dot" style="background:#d4a24e"></div>
+          <div><h4>Literature Knowledge</h4><p>Your command of the related literature and theoretical framework.</p></div>
+        </div>
+        <div class="drs-cat">
+          <div class="dot" style="background:#c0654a"></div>
+          <div><h4>Presentation Clarity</h4><p>How clearly and confidently you communicate your answers.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROWTH PATH / PRICING ============ -->
+<section class="section" id="growth">
+  <div class="wrap">
+    <div class="journey-intro reveal">
+      <div class="eyebrow" style="justify-content:center;">From seedling to harvest</div>
+      <h2>A plan for every stage of growth</h2>
+      <p style="color:var(--forest); margin-top:14px;">Pricing follows the academic calendar, not the credit card cycle. Start free, and upgrade only when the pressure — and the pages — pile up.</p>
+    </div>
+
+    <div class="journey reveal">
+      <div class="journey-stage">
+        <div class="stage-ring">Stage 01 · Seedling</div>
+        <h3>Freemium</h3>
+        <div class="stage-price">₱0 <span>/ forever</span></div>
+        <div class="stage-tagline">Enough to feel the gap between free and paid.</div>
+        <ul class="stage-feature-list">
+          <li>5 paper summaries / month</li>
+          <li>1 mini PanelSim session (3 exchanges)</li>
+          <li>Fundamentals persona only</li>
+          <li>7-day history</li>
+          <li>AI-Tutor locked, but visible</li>
+        </ul>
+      </div>
+
+      <div class="journey-stage">
+        <div class="stage-ring">Stage 02 · Sprouting</div>
+        <h3>Premium</h3>
+        <div class="stage-price">₱199 <span>/ month</span></div>
+        <div class="stage-tagline">For the research and writing phase.</div>
+        <ul class="stage-feature-list">
+          <li>100 paper summaries / month</li>
+          <li>3 full PanelSim sessions (10 exchanges)</li>
+          <li>All 5 base personas unlocked</li>
+          <li>Unlimited Research Boards</li>
+          <li>AI-Tutor: 20 questions / month</li>
+          <li>Permanent history</li>
+        </ul>
+      </div>
+
+      <div class="journey-stage">
+        <div class="stage-ring">Stage 03 · Branching</div>
+        <h3>Pro</h3>
+        <div class="stage-price">₱349 <span>/ month</span></div>
+        <div class="stage-tagline">Heavier research, more serious defense prep.</div>
+        <ul class="stage-feature-list">
+          <li>200 paper summaries / month</li>
+          <li>8 full PanelSim sessions</li>
+          <li>Expert Tutor + multi-persona mode</li>
+          <li>Chrome Extension for Scholar saves</li>
+          <li>AI Board synthesis + comparative DRS</li>
+          <li>Unlimited AI-Tutor questions</li>
+        </ul>
+      </div>
+
+      <div class="journey-stage featured">
+        <div class="featured-badge">Most popular</div>
+        <div class="stage-ring">Stage 04 · Full Canopy</div>
+        <h3>Semester Pass</h3>
+        <div class="stage-price">₱799 <span>/ semester</span></div>
+        <div class="stage-tagline">One commitment, covers finals and defense.</div>
+        <ul class="stage-feature-list">
+          <li>300 paper summaries / semester</li>
+          <li>15 full PanelSim sessions</li>
+          <li>Everything in Pro, included</li>
+          <li>Unlimited Team Hub — whole thesis group</li>
+          <li>6 calendar months from activation</li>
+        </ul>
+      </div>
+
+      <div class="journey-stage">
+        <div class="stage-ring">Stage 05 · Harvest</div>
+        <h3>Academic Year Pass</h3>
+        <div class="stage-price">₱1,299 <span>/ year</span></div>
+        <div class="stage-tagline">Everything, without thinking about limits.</div>
+        <ul class="stage-feature-list">
+          <li>600 paper summaries / year</li>
+          <li>30 full PanelSim sessions / year</li>
+          <li>Priority support</li>
+          <li>Exclusive: Defense Countdown Mode</li>
+          <li>From 30 days out — daily focus suggestions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TWO-BUCKET / ROOTS ============ -->
+<section class="section alt">
+  <div class="wrap roots-section">
+    <div class="reveal">
+      <div class="eyebrow">The reservoir</div>
+      <h2 style="color:var(--paper)">Two buckets, like soil and stored rain</h2>
+      <p class="moss-text" style="margin-bottom:34px;">Your plan allowance is the soil — it resets each cycle and is used first. Emergency Packs are stored rain in reserve — they never expire, and only get tapped once the soil runs dry.</p>
+
+      <div class="bucket-card b1">
+        <div class="bucket-num">01</div>
+        <div>
+          <h4 style="color:var(--paper)">Plan Allowance</h4>
+          <p style="color:var(--moss-light)">Resets every billing cycle. Always spent first. Comes from your subscription tier.</p>
+        </div>
+      </div>
+      <div class="bucket-card b2">
+        <div class="bucket-num">02</div>
+        <div>
+          <h4 style="color:var(--paper)">Purchased Credits</h4>
+          <p style="color:var(--moss-light)">Never expires. Only spent once your plan allowance is fully used. Comes from Emergency Packs.</p>
+        </div>
+      </div>
+
+      <p style="margin-top:24px; font-family:var(--ff-mono); font-size:0.82rem; color:var(--amber-soft); background:rgba(212,162,78,0.08); padding:14px 18px; border-radius:10px; border-left:3px solid var(--amber);">
+        Sidebar always shows: "Papers — 147 plan / 20 saved"
+      </p>
+    </div>
+
+    <div class="roots-visual reveal">
+      <svg width="100%" height="380" viewBox="0 0 380 380" fill="none">
+        <!-- ground line -->
+        <line x1="20" y1="120" x2="360" y2="120" stroke="#5a8268" stroke-width="1" stroke-dasharray="4 4" opacity="0.4"/>
+        <text x="190" y="105" text-anchor="middle" font-family="JetBrains Mono" font-size="10" letter-spacing="2" fill="#9bb89f">SURFACE</text>
+        <!-- trunk above ground -->
+        <rect x="180" y="40" width="20" height="80" fill="#3e2f24" rx="4"/>
+        <ellipse cx="190" cy="40" rx="70" ry="38" fill="#5a8268"/>
+        <ellipse cx="155" cy="55" rx="48" ry="28" fill="#27493a"/>
+        <!-- bucket 1: roots, draw from soil -->
+        <path d="M190 120 C190 150, 140 160, 120 200 C105 230, 80 240, 60 270" stroke="#5a8268" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path d="M190 120 C190 150, 230 165, 250 200" stroke="#5a8268" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <circle cx="60" cy="270" r="26" fill="#27493a" stroke="#5a8268" stroke-width="2"/>
+        <text x="60" y="275" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="700" fill="#9bb89f">01</text>
+        <circle cx="250" cy="200" r="20" fill="#27493a" stroke="#5a8268" stroke-width="2" opacity="0.6"/>
+        <text x="250" y="205" text-anchor="middle" font-family="JetBrains Mono" font-size="13" font-weight="700" fill="#9bb89f">01</text>
+        <!-- bucket 2: reservoir, amber, never empties -->
+        <rect x="270" y="240" width="90" height="110" rx="12" fill="#27493a" stroke="#d4a24e" stroke-width="2"/>
+        <rect x="278" y="260" width="74" height="82" rx="4" fill="#d4a24e" opacity="0.18"/>
+        <rect x="278" y="285" width="74" height="57" rx="4" fill="#d4a24e" opacity="0.45"/>
+        <text x="315" y="305" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="700" fill="#e9c98a">02</text>
+        <text x="315" y="324" text-anchor="middle" font-family="JetBrains Mono" font-size="9" letter-spacing="1" fill="#e9c98a">NEVER</text>
+        <text x="315" y="335" text-anchor="middle" font-family="JetBrains Mono" font-size="9" letter-spacing="1" fill="#e9c98a">EXPIRES</text>
+        <path d="M250 220 C260 230, 270 232, 280 240" stroke="#d4a24e" stroke-width="3" fill="none" stroke-dasharray="4 4" opacity="0.7"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EMERGENCY PACKS ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Stored rain</div>
+      <h2>Emergency Packs — for the night before</h2>
+      <p>Not plans, just top-ups. Available to any paid subscriber the moment allocation runs dry, with checkout fast enough to get back into a PanelSim session within 90 seconds.</p>
+    </div>
+    <div class="emergency-grid reveal">
+      <div class="emergency-card">
+        <div class="price-tag">₱49</div>
+        <h4>Emergency Paper Pack</h4>
+        <p>Adds 20 paper summaries immediately. Available on Premium, Pro, Semester Pass, and Year Pass.</p>
+      </div>
+      <div class="emergency-card">
+        <div class="price-tag">₱99</div>
+        <h4>Emergency PanelSim Pack</h4>
+        <p>Adds 2 full PanelSim sessions immediately. The single highest-urgency purchase in the product — optimized for two-tap mobile checkout via GCash or Maya.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONVERSION MOMENTS ============ -->
+<section class="section alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Where it makes sense to ask</div>
+      <h2 style="color:var(--paper)">Upgrade prompts, rooted in the moment</h2>
+      <p class="moss-text">No banners shouting "Upgrade Now" in red. Every prompt appears exactly where a student just hit a real limit — informative, specific, and tied to something they were actually trying to do.</p>
+    </div>
+    <div class="moments reveal">
+      <div class="moment">
+        <div class="moment-when">5th summary</div>
+        <div class="moment-trigger">
+          <h4>Last free summary</h4>
+          <p>Research Hub · Freemium</p>
+        </div>
+        <div class="moment-copy">"This is your last free summary this month. Upgrade to keep researching."</div>
+      </div>
+      <div class="moment">
+        <div class="moment-when">Citation copy</div>
+        <div class="moment-trigger">
+          <h4>Export locked</h4>
+          <p>Citation Manager · Freemium</p>
+        </div>
+        <div class="moment-copy">"Citation export is available on Premium and above — ₱199/month."</div>
+      </div>
+      <div class="moment">
+        <div class="moment-when">Board creation</div>
+        <div class="moment-trigger">
+          <h4>Research Boards blocked</h4>
+          <p>Research Hub · Freemium</p>
+        </div>
+        <div class="moment-copy">"Research Boards are where thesis projects come together. Unlock them from ₱199/month."</div>
+      </div>
+      <div class="moment">
+        <div class="moment-when">2nd PanelSim</div>
+        <div class="moment-trigger">
+          <h4>Free session used</h4>
+          <p>PanelSim · Freemium</p>
+        </div>
+        <div class="moment-copy">"Your defense needs more practice than one session — here's what each plan gives you."</div>
+      </div>
+      <div class="moment">
+        <div class="moment-when">DRS report</div>
+        <div class="moment-trigger">
+          <h4>Report blurred</h4>
+          <p>PanelSim · Freemium</p>
+        </div>
+        <div class="moment-copy">"Your score is ready — upgrade to see exactly where you struggled and how to fix it."</div>
+      </div>
+      <div class="moment">
+        <div class="moment-when">Expert Tutor</div>
+        <div class="moment-trigger">
+          <h4>Persona locked</h4>
+          <p>PanelSim · Premium and below</p>
+        </div>
+        <div class="moment-copy">"Expert Tutor is available on Pro and above — ₱349/month. It's the persona that teaches you while it challenges you."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTITUTIONAL ============ -->
+<section class="section" id="institutions">
+  <div class="wrap inst-grid">
+    <div class="reveal">
+      <div class="eyebrow">The grove, not the seedling</div>
+      <h2>Institutional Access</h2>
+      <p style="color:var(--forest);">Universities and departments skip the consumer checkout entirely. Licenses activate against a university domain or student email list — matching students get full Pro-level access, no individual payment required.</p>
+
+      <table class="inst-table">
+        <thead>
+          <tr><th>Package</th><th>Size</th><th>Annual Price</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Department Pack S</td><td>Up to 50 students</td><td class="price">₱60,000</td></tr>
+          <tr><td>Department Pack M</td><td>Up to 150 students</td><td class="price">₱120,000</td></tr>
+          <tr><td>College Pack</td><td>Up to 500 students</td><td class="price">₱300,000</td></tr>
+          <tr><td>University-wide</td><td>Unlimited</td><td class="price">Custom</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="reveal">
+      <div class="eyebrow">Privacy, by design</div>
+      <h2>What faculty see — and don't</h2>
+      <p style="color:var(--forest); margin-bottom:10px;">Faculty Dashboards show cohort-level growth, like a forester surveying a grove from above — never a single tree's private rings.</p>
+
+      <div class="privacy-list">
+        <div class="privacy-row yes">
+          <div class="pip"></div>
+          <div><strong>Average DRS scores by week</strong><span>Aggregate trends across the department</span></div>
+        </div>
+        <div class="privacy-row yes">
+          <div class="pip"></div>
+          <div><strong>Score distribution</strong><span>How the cohort is spread across readiness levels</span></div>
+        </div>
+        <div class="privacy-row yes">
+          <div class="pip"></div>
+          <div><strong>Most-used personas & weakest sub-categories</strong><span>Where the cohort needs support most</span></div>
+        </div>
+        <div class="privacy-row no">
+          <div class="pip"></div>
+          <div><strong>Individual PanelSim session content</strong><span>Never visible to faculty</span></div>
+        </div>
+        <div class="privacy-row no">
+          <div class="pip"></div>
+          <div><strong>Individual Research Board contents</strong><span>Never visible to faculty</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FULL ACCESS TABLE ============ -->
+<section class="section alt" id="access">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">The full grove, side by side</div>
+      <h2 style="color:var(--paper)">Summary Access Table</h2>
+      <p class="moss-text">Every feature, every tier — at a glance.</p>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Freemium</th>
+            <th>Premium</th>
+            <th>Pro</th>
+            <th class="featured-col">Semester Pass</th>
+            <th>Year Pass</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Price</td><td>₱0</td><td>₱199/mo</td><td>₱349/mo</td><td class="featured-col">₱799/sem</td><td>₱1,299/yr</td></tr>
+          <tr><td>Paper Summaries</td><td>5/month</td><td>100/month</td><td>200/month</td><td class="featured-col">300/semester</td><td>600/year</td></tr>
+          <tr><td>PanelSim Sessions</td><td>1 mini/month</td><td>3 full/month</td><td>8 full/month</td><td class="featured-col">15 full/semester</td><td>30 full/year</td></tr>
+          <tr><td>AI-Tutor</td><td class="locked">Locked</td><td>20 q/month</td><td class="unlocked">Unlimited</td><td class="featured-col unlocked">Unlimited</td><td class="unlocked">Unlimited</td></tr>
+          <tr><td>Citation Export</td><td class="locked">Locked</td><td>All formats</td><td>All formats</td><td class="featured-col">All formats</td><td>All formats</td></tr>
+          <tr><td>Research Boards</td><td class="locked">Locked</td><td class="unlocked">Unlimited</td><td class="unlocked">Unlimited</td><td class="featured-col unlocked">Unlimited</td><td class="unlocked">Unlimited</td></tr>
+          <tr><td>Board Synthesis AI</td><td class="locked">Locked</td><td class="locked">Locked</td><td class="unlocked">Unlocked</td><td class="featured-col unlocked">Unlocked</td><td class="unlocked">Unlocked</td></tr>
+          <tr><td>Chrome Extension</td><td class="locked">Locked</td><td class="locked">Locked</td><td class="unlocked">Unlocked</td><td class="featured-col unlocked">Unlocked</td><td class="unlocked">Unlocked</td></tr>
+          <tr><td>All 5 Base Personas</td><td class="locked">Locked</td><td class="unlocked">Unlocked</td><td class="unlocked">Unlocked</td><td class="featured-col unlocked">Unlocked</td><td class="unlocked">Unlocked</td></tr>
+          <tr><td>Expert Tutor Persona</td><td class="locked">Locked</td><td class="locked">Locked</td><td class="unlocked">Unlocked</td><td class="featured-col unlocked">Unlocked</td><td class="unlocked">Unlocked</td></tr>
+          <tr><td>Multi-Persona Mode</td><td class="locked">Locked</td><td class="locked">Locked</td><td class="unlocked">Unlocked</td><td class="featured-col unlocked">Unlocked</td><td class="unlocked">Unlocked</td></tr>
+          <tr><td>Collaboration</td><td>View only</td><td>1 peer</td><td>5 peers</td><td class="featured-col">Unlimited Hub</td><td>Unlimited Hub</td></tr>
+          <tr><td>History</td><td>7 days</td><td>Permanent</td><td>Permanent</td><td class="featured-col">Permanent</td><td>Permanent</td></tr>
+          <tr><td>Comparative DRS</td><td class="locked">Locked</td><td class="locked">Locked</td><td class="unlocked">Unlocked</td><td class="featured-col unlocked">Unlocked</td><td class="unlocked">Unlocked</td></tr>
+          <tr><td>Defense Countdown</td><td class="locked">Locked</td><td class="locked">Locked</td><td class="locked">Locked</td><td class="featured-col locked">Locked</td><td class="unlocked">Unlocked</td></tr>
+          <tr><td>Priority Support</td><td>No</td><td>No</td><td>No</td><td class="featured-col">No</td><td class="unlocked">Yes</td></tr>
+          <tr><td>Emergency Packs</td><td class="locked">Not available</td><td>Available</td><td>Available</td><td class="featured-col">Available</td><td>Available</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:24px; font-size:0.85rem; color:var(--moss-light); font-family:var(--ff-mono);">
+      Emergency Pack pricing: ₱49 for 20 paper summaries · ₱99 for 2 PanelSim sessions. Credits never expire and are spent only after plan allowance is exhausted.
+    </p>
+  </div>
+</section>
+
+<!-- ============ CLOSING CTA ============ -->
+<section class="section" style="text-align:center; padding-bottom:60px;">
+  <div class="wrap reveal">
+    <div class="eyebrow" style="justify-content:center;">Ready when you are</div>
+    <h2 style="max-width:720px; margin:0 auto 28px;">Plant your first source today. Your defense will be here before you know it.</h2>
+    <a href="#" class="btn-primary">Start Free →</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">AcademicShield</div>
+        <p class="footer-brand-sub">An AI-powered Research & Defense platform built for Filipino thesis students — Research Hub, PanelSim, and AI-Tutor in one calm space.</p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="#hub">Research Hub</a></li>
+          <li><a href="#panelsim">PanelSim</a></li>
+          <li><a href="#growth">AI-Tutor</a></li>
+          <li><a href="#access">Full Access Table</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Plans</h5>
+        <ul>
+          <li><a href="#growth">Freemium</a></li>
+          <li><a href="#growth">Premium · ₱199/mo</a></li>
+          <li><a href="#growth">Pro · ₱349/mo</a></li>
+          <li><a href="#growth">Semester Pass · ₱799</a></li>
+          <li><a href="#growth">Academic Year Pass · ₱1,299</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Institutions</h5>
+        <ul>
+          <li><a href="#institutions">Department Packs</a></li>
+          <li><a href="#institutions">College Pack</a></li>
+          <li><a href="#institutions">University-wide</a></li>
+          <li><a href="#institutions">Faculty Dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Philippines &amp; Southeast Asia · Version 2.0 · June 2026</span>
+      <span class="confidential">Confidential — Development &amp; investor use only</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
